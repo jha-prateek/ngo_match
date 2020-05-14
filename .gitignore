@@ -1,6 +1,7 @@
-db.sqlite3
+db.sqlite3*
 *.pyc
 config.json
 *.ipynb_checkpoints
 *.log
 *cleaned.csv
+migrations

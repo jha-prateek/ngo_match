@@ -4,4 +4,4 @@ from .models import NGO
 class NGOSerializer(serializers.ModelSerializer):
     class Meta:
         model = NGO
-        fields = ('ngo_id', 'name', 'city', 'state', 'address_line', 'contact_1', 'contact_2')
+        fields = ('name', 'city', 'state', 'full_address', 'contact_1', 'contact_2', 'website', 'email', 'pincode' )
