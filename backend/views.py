@@ -17,13 +17,16 @@ class NGOListCreate(generics.ListAPIView):
         serializer = None
         lon = request.query_params.get('lon', None)
         lat = request.query_params.get('lat', None) 
+        
         if lon is not None and lat is not None:
             
             address_dict = dict()
             address_dict = self.get_address(lon, lat)
-            
+
             if address_dict['status'] == 'fail':
                 return Response({"found_entries": 0})
+            
+            # address_dict['postal_code'] = '560102'
 
             query = "select * from backend_ngo where (pincode='{}.0')".format(address_dict['postal_code'])
             try:
@@ -41,7 +44,7 @@ class NGOListCreate(generics.ListAPIView):
 
     def get_address(self, lon, lat):
         apikey = json.loads(open(settings.CONFIG_FILE_PATH, 'r').read())['GoogleAPIKey']
-        mapsURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}'.format(lat,lon,'apikey')
+        mapsURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng={},{}&key={}'.format(lat,lon,apikey)
         address_dict = dict()
         address_dict['status'] = 'fail'
         try:

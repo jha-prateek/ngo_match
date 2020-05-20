@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './App.css';
+import DetailList from './components/DetailList';
 
 class App extends Component {
     constructor(props) {
@@ -11,23 +12,34 @@ class App extends Component {
         this.getCovidStats = this.getCovidStats.bind(this);
         this.getFullAddress = this.getFullAddress.bind(this);
         this.initMap = this.initMap.bind(this);
+        this.getNGOData = this.getNGOData.bind(this);
+    }
+
+    getNGOData(){
+        let apiURL = `http://localhost:8000/api/ngos/?lat=${this.state.Lat}&lon=${this.state.Long}`
+        fetch(apiURL)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                this.setState({
+                    'ngo_data':{
+                        isLoaded: (result.found_entries === 0 ? false: true),
+                        items: result
+                    }
+                });
+            },
+            (error) => {
+                this.setState({
+                    'ngo_data':{
+                        isLoaded: false
+                    }
+                });
+            }
+        )
     }
 
     getFullAddress(lat, long){
 
-        let country; 
-        
-        let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${this.state.googleApiKeys}`;
-        fetch(url)
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            country = (data['results'][0]['address_components'][data['results'][0]['address_components'].length - 2]['long_name']);         
-            this.setState({
-                'country': country
-            });         
-        });
     }
 
     initMap(lat, long){
@@ -49,17 +61,13 @@ class App extends Component {
 
 		function success(pos) {
 			var crd = pos.coords;
-
-			console.log('Your current position is:');
-			console.log(`Latitude : ${crd.latitude}`);
-			console.log(`Longitude: ${crd.longitude}`);
-			console.log(`More or less ${crd.accuracy} meters.`);
 	
 			self.setState({
 				'Lat': crd.latitude,
 				'Long': crd.longitude
 			});
-
+            
+            self.getNGOData();
             self.getFullAddress(crd.latitude, crd.longitude);
 		}
 	
@@ -70,9 +78,9 @@ class App extends Component {
         navigator.geolocation.getCurrentPosition(success, error, options);
     }
 
-    showGeoLocation(lat, long, country){
+    showGeoLocation(lat, long){
         if(lat && long){
-            return `${lat}, ${long} in ${country}`;
+            return `${lat}, ${long}`;
         }
     }
 
@@ -84,13 +92,20 @@ class App extends Component {
         this.getGeoLocation();
         this.setState({
             'googleApiKeys': require('./config.json').GoogleAPIKey
-        });        
+        });   
     }
 
-	render() {
+    render() {
+        let detailListVar;
+        
+        if(this.state.ngo_data ){
+            detailListVar = <DetailList api_data={this.state.ngo_data}/>
+        }
+
 		return (
-			<div className="location">
-				<h4>Your current postion is {this.showGeoLocation(this.state.Lat, this.state.Long, this.state.country)}</h4>
+			<div className="main-body">
+				<h4>Your current postion is {this.showGeoLocation(this.state.Lat, this.state.Long)}</h4>
+                {detailListVar}
 			</div>
 		);
 	}

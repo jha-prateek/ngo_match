@@ -1,2 +1,13 @@
-/* .location{
-} */
+
+.detail-list{
+    padding: 1%;
+}
+
+.detail-card{
+    border-style: double;
+    padding: 5pt;
+}
+
+li{
+    list-style: none ;
+}
