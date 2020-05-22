@@ -22,12 +22,12 @@ class NGOList(generics.ListAPIView):
         if lon is not None and lat is not None:
             
             address_dict = dict()
-            address_dict = self.get_address(lon, lat)
+            # address_dict = self.get_address(lon, lat)
 
-            if address_dict['status'] == 'fail':
-                return Response({"found_entries": 0})
+            # if address_dict['status'] == 'fail':
+            #     return Response({"found_entries": 0})
             
-            # address_dict['postal_code'] = '560102'
+            address_dict['postal_code'] = '560102'
 
             query = "select * from backend_ngo where (pincode='{}.0')".format(address_dict['postal_code'])
             try:

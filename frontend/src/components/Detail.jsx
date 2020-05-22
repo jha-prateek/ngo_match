@@ -10,7 +10,7 @@ export default class Detail extends Component{
             contact2 = <h5>Telephone: <a href={"tel:" + this.props.contact_2}>{this.props.contact_2}</a></h5>
         }
         if(this.props.website !== 'nan'){
-            website = <h5>Website: <a href={this.props.website} target="_blank">{this.props.website}</a></h5>
+            website = <h5>Website: <a href={this.props.website} target="_blank" rel="noopener noreferrer">{this.props.website}</a></h5>
         }
 
         return (

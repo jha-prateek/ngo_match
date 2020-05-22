@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './App.css';
 import DetailList from './components/DetailList';
-import Search from './components/Search';
+import Search from './components/Search.jsx';
 
 class App extends Component {
     constructor(props) {
@@ -99,7 +99,8 @@ class App extends Component {
     render() {
 		return (
 			<div className="main-body">
-                <navbar className="navbar"><Search/></navbar>
+                {/* <navbar className="navbar"></navbar> */}
+                <Search/>
                 <h4 className="geo-loc">Your current postion is {this.showGeoLocation(this.state.Lat, this.state.Long)}</h4>
                 <DetailList api_data={this.state.ngo_data}/>
 			</div>

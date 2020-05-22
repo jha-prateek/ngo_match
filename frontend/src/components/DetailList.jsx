@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Detail from './Detail';
+import Detail from './Detail.jsx';
 
 export default class DetailList extends Component{
     render(){

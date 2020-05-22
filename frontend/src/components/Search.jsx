@@ -85,7 +85,7 @@ export default class Search extends Component{
         const {text} = this.state;
         return (
             <div className="main-input">
-                <input className="search-box" type="text" value={text} onChange={this.autoCompleteIt}/>
+                <input type="text" value={text} onChange={this.autoCompleteIt} placeholder="Your City" required pattern="\S+.*"/>
                 <ul ref={this.suggestionContainer} className="suggestions-list">
                     {this.renderSuggentions()}
                 </ul>
