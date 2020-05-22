@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export default class Detail extends Component{
     render(){
-        let contact2, contact1, email, website;
+        let contact2, contact1, website;
         if(this.props.contact_1 !== 'nan'){
             contact1 = <h5>Telephone: <a href={"tel:" + this.props.contact_1}>{this.props.contact_1}</a></h5>
         }

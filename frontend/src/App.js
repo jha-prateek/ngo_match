@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './App.css';
 import DetailList from './components/DetailList';
+import Search from './components/Search';
 
 class App extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class App extends Component {
     }
 
     getNGOData(){
-        let apiURL = `http://localhost:8000/api/ngos/?lat=${this.state.Lat}&lon=${this.state.Long}`
+        let apiURL = `http://localhost:8000/api/ngos/at/?lat=${this.state.Lat}&lon=${this.state.Long}`
         fetch(apiURL)
         .then(res => res.json())
         .then(
@@ -43,9 +44,9 @@ class App extends Component {
     }
 
     initMap(lat, long){
-        let url = `https://www.google.com/maps/embed/v1/view?key=${this.state.googleApiKeys}
-        &center=${lat},${long}
-        &zoom=11`;
+        // let url = `https://www.google.com/maps/embed/v1/view?key=${this.state.googleApiKeys}
+        // &center=${lat},${long}
+        // &zoom=11`;
     }
 
     getGeoLocation(){
@@ -96,16 +97,11 @@ class App extends Component {
     }
 
     render() {
-        let detailListVar;
-        
-        if(this.state.ngo_data ){
-            detailListVar = <DetailList api_data={this.state.ngo_data}/>
-        }
-
 		return (
 			<div className="main-body">
-				<h4>Your current postion is {this.showGeoLocation(this.state.Lat, this.state.Long)}</h4>
-                {detailListVar}
+                <navbar className="navbar"><Search/></navbar>
+                <h4 className="geo-loc">Your current postion is {this.showGeoLocation(this.state.Lat, this.state.Long)}</h4>
+                <DetailList api_data={this.state.ngo_data}/>
 			</div>
 		);
 	}

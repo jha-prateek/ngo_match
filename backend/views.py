@@ -1,5 +1,6 @@
-from django.shortcuts import render
 from rest_framework import generics
+from django.http import HttpResponse
+from django.views import View
 from .models import NGO
 from .serializers import NGOSerializer
 from django.db import connection
@@ -10,7 +11,7 @@ import requests
 from django.conf import settings
 
 # Create your views here.
-class NGOListCreate(generics.ListAPIView):
+class NGOList(generics.ListAPIView):
     serializer_class = NGOSerializer
     
     def get(self, request):
@@ -66,4 +67,17 @@ class NGOListCreate(generics.ListAPIView):
         return address_dict
                 
 
-    
+class CityList(View):
+    def get(self, request):
+        response = {'status': 'fail'}
+        query = "select DISTINCT city from backend_ngo ORDER by city ASC"
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                result = [val[0] for val in cursor.fetchall()]
+                response['data'] = result
+                response['entries'] = str(len(result))
+                response['status'] = 'ok'
+        except :
+            pass
+        return HttpResponse(json.dumps(response))

@@ -17,7 +17,7 @@ export default class DetailList extends Component{
         }
 
         return (
-            <div className="detail-list">
+            <div className="detail-list-container">
                 <ul>
                     {details}
                 </ul>
