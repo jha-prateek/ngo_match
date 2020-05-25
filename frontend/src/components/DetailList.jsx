@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Detail from './Detail.jsx';
+import Details from './Details.jsx';
 
 export default class DetailList extends Component{
     render(){
@@ -9,7 +9,7 @@ export default class DetailList extends Component{
             details = ngo_details.items.map((data) => {
                 return (
                 <li key={data.id}>
-                    <Detail ngo_name={data.name} full_address={data.full_address} 
+                    <Details ngo_name={data.name} full_address={data.full_address} 
                     contact_1={data.contact_1} contact_2={data.contact_2} website={data.website}/>
                 </li>
                 ); 

@@ -15,10 +15,17 @@ export default class Search extends Component{
         this.renderSuggentions = this.renderSuggentions.bind(this);
         this.selectSuggestion = this.selectSuggestion.bind(this);
         this.getCitiesData = this.getCitiesData.bind(this);
+        this.handleOutsideClick = this.handleOutsideClick.bind(this);
     }
 
-    autoCompleteIt(e){
-        const textVal = e.target.value;
+    handleOutsideClick(event){
+        if(this.suggestionContainer.current !== null && (event.path[1].className !== this.suggestionContainer.current.className)){
+            this.suggestionContainer.current.style.display = "None";
+        }
+    }
+
+    autoCompleteIt(event){
+        const textVal = event.target.value;
         let newSuggestions = [];
         const {citiesData} = this.state;
         if(textVal.length > 0 && citiesData.isLoaded){
@@ -51,6 +58,7 @@ export default class Search extends Component{
             text: value,
             suggestions: []
         });
+        this.props.onSelect(value);
     }
 
     getCitiesData(){
@@ -79,6 +87,11 @@ export default class Search extends Component{
 
     componentDidMount(){
         this.getCitiesData();
+        document.addEventListener('mousedown', this.handleOutsideClick);
+    }
+
+    componentWillUnmount(){
+        document.removeEventListener('mousedown', this.handleOutsideClick);
     }
 
     render(){

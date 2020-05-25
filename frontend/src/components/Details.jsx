@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class Detail extends Component{
+export default class Details extends Component{
     render(){
         let contact2, contact1, website;
         if(this.props.contact_1 !== 'nan'){

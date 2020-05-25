@@ -10,7 +10,7 @@ import json
 import requests
 from django.conf import settings
 
-# Create your views here.
+# /api/ngos/at/?lat=12.8391574&lon=77.6460476
 class NGOList(generics.ListAPIView):
     serializer_class = NGOSerializer
     
@@ -22,10 +22,10 @@ class NGOList(generics.ListAPIView):
         if lon is not None and lat is not None:
             
             address_dict = dict()
-            # address_dict = self.get_address(lon, lat)
+            address_dict = self.get_address(lon, lat)
 
-            # if address_dict['status'] == 'fail':
-            #     return Response({"found_entries": 0})
+            if address_dict['status'] == 'fail':
+                return Response({"found_entries": 0})
             
             address_dict['postal_code'] = '560102'
 
@@ -66,6 +66,28 @@ class NGOList(generics.ListAPIView):
 
         return address_dict
                 
+# /api/ngos/at/?city=
+class NGOListByCity(generics.ListAPIView):
+    serializer_class = NGOSerializer
+    
+    def get(self, request):
+        serializer = None
+        city = request.query_params.get('city', None) 
+        
+        if city is not None:
+            query = "select * from backend_ngo where city = '{}'".format(city)
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute(query)
+                    desc = cursor.description
+                    nt_result = namedtuple('Result', [col[0] for col in desc])
+                    model_tuple = [nt_result(*row) for row in cursor.fetchall()]
+                    serializer = self.serializer_class(model_tuple, many=True)
+            except :
+                pass
+            return Response(serializer.data)
+        else:
+            return Response({"found_entries": 0})
 
 class CityList(View):
     def get(self, request):
