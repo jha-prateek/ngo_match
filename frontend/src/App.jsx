@@ -28,7 +28,7 @@ class App extends Component {
                 this.setState({
                     'ngo_data':{
                         isLoaded: (result.found_entries === 0 ? false: true),
-                        items: result
+                        items: result.data
                     }
                 });
             },

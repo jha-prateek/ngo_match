@@ -15,7 +15,6 @@ import os
 # / <Home page>
 class IndexPage(View):
     def get(self, request):
-        print (os.path.join(settings.REACT_APP_DIR, 'build', 'index.html'))
         try:
             with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
                 return HttpResponse(f.read())
@@ -42,13 +41,13 @@ class NGOList(generics.ListAPIView):
         if lon is not None and lat is not None:
             
             address_dict = dict()
-            address_dict = self.get_address(lon, lat)
+            # address_dict = self.get_address(lon, lat)
 
-            if address_dict['status'] == 'fail':
-                return Response({"found_entries": 0})
+            # if address_dict['status'] == 'fail':
+            #     return Response({"found_entries": 0})
             
             """ Uncomment for dummy API Call"""
-            # address_dict['postal_code'] = '560102'
+            address_dict['postal_code'] = '560102'
 
             query = "select * from backend_ngo where (pincode='{}.0')".format(address_dict['postal_code'])
             try:
@@ -57,10 +56,11 @@ class NGOList(generics.ListAPIView):
                     desc = cursor.description
                     nt_result = namedtuple('Result', [col[0] for col in desc])
                     model_tuple = [nt_result(*row) for row in cursor.fetchall()]
+                    found_entries = len(model_tuple)
                     serializer = self.serializer_class(model_tuple, many=True)
             except :
                 pass
-            return Response(serializer.data)
+            return Response({"found_entries": found_entries, "data": serializer.data})
         else:
             return Response({"found_entries": 0})
 
@@ -103,10 +103,11 @@ class NGOListByCity(generics.ListAPIView):
                     desc = cursor.description
                     nt_result = namedtuple('Result', [col[0] for col in desc])
                     model_tuple = [nt_result(*row) for row in cursor.fetchall()]
+                    found_entries = len(model_tuple)
                     serializer = self.serializer_class(model_tuple, many=True)
             except :
                 pass
-            return Response(serializer.data)
+            return Response({"found_entries": found_entries, "data": serializer.data})
         else:
             return Response({"found_entries": 0})
 
