@@ -9,6 +9,26 @@ from collections import namedtuple
 import json
 import requests
 from django.conf import settings
+import logging
+import os
+
+# / <Home page>
+class IndexPage(View):
+    def get(self, request):
+        print (os.path.join(settings.REACT_APP_DIR, 'build', 'index.html'))
+        try:
+            with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
+                return HttpResponse(f.read())
+        except FileNotFoundError:
+            logging.exception('Production build of app not found')
+            return HttpResponse(
+                """
+                This URL is only used when you have built the production
+                version of the app. Visit http://localhost:3000/ instead, or
+                run `yarn run build` to test the production version.
+                """,
+                status=501,
+            )
 
 # /api/ngos/at/?lat=12.8391574&lon=77.6460476
 class NGOList(generics.ListAPIView):
@@ -27,7 +47,8 @@ class NGOList(generics.ListAPIView):
             if address_dict['status'] == 'fail':
                 return Response({"found_entries": 0})
             
-            address_dict['postal_code'] = '560102'
+            """ Uncomment for dummy API Call"""
+            # address_dict['postal_code'] = '560102'
 
             query = "select * from backend_ngo where (pincode='{}.0')".format(address_dict['postal_code'])
             try:
