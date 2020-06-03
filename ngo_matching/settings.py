@@ -131,7 +131,10 @@ REST_FRAMEWORK = {
     )
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_REGEX_WHITELIST = [
+    'http://localhost:8000',
+    # r"^https://\w+\.example\.com$",
+]
 
 REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
 

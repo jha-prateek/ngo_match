@@ -62,7 +62,7 @@ export default class Search extends Component{
     }
 
     getCitiesData(){
-        let apiURL = `http://localhost:8000/api/cities/`;
+        let apiURL = `http://localhost:8000/api/cities`;
         fetch(apiURL)
         .then(res => res.json())
         .then(

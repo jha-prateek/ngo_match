@@ -1,8 +1,9 @@
 from rest_framework import generics
-from django.http import HttpResponse
+from rest_framework.views import APIView
+from django.http import HttpResponse, JsonResponse
 from django.views import View
 from .models import NGO
-from .serializers import NGOSerializer
+from .serializers import NGOSerializer, CreateNGOSerializer
 from django.db import connection
 from rest_framework.response import Response
 from collections import namedtuple
@@ -11,6 +12,9 @@ import requests
 from django.conf import settings
 import logging
 import os
+from rest_framework import status
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
 
 # / <Home page>
 class IndexPage(View):
@@ -125,3 +129,25 @@ class CityList(View):
         except :
             pass
         return HttpResponse(json.dumps(response))
+
+# /api/add/
+# @method_decorator(csrf_exempt, name='dispatch')
+class CreateNGO(APIView):
+
+    def post(self, request, format=None):
+        serializer = CreateNGOSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@csrf_exempt
+def create_ngo(request):
+
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = CreateNGOSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)

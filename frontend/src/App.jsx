@@ -17,9 +17,9 @@ class App extends Component {
     getNGOData(){
         let apiURL;
         if(this.state.citySearchVal !== undefined){
-            apiURL = `http://localhost:8000/api/ngos/search/?city=${this.state.citySearchVal}`;
+            apiURL = `http://localhost:8000/api/ngos/search?city=${this.state.citySearchVal}`;
         }else{
-            apiURL = `http://localhost:8000/api/ngos/at/?lat=${this.state.Lat}&lon=${this.state.Long}`
+            apiURL = `http://localhost:8000/api/ngos/at?lat=${this.state.Lat}&lon=${this.state.Long}`
         }
         fetch(apiURL)
         .then(res => res.json())
