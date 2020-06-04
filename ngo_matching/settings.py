@@ -84,6 +84,8 @@ DATABASES = {
     }
 }
 
+CONFIG_FILE_PATH = os.path.join(BASE_DIR, 'config.json')
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -129,3 +131,13 @@ REST_FRAMEWORK = {
     )
 }
 
+CORS_ORIGIN_REGEX_WHITELIST = [
+    'http://localhost:8000',
+    # r"^https://\w+\.example\.com$",
+]
+
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
+
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+]
