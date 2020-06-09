@@ -133,6 +133,7 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_REGEX_WHITELIST = [
     'http://localhost:8000',
+    'http://localhost:3000',
     # r"^https://\w+\.example\.com$",
 ]
 

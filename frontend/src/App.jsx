@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import DetailList from './components/DetailList';
 import Search from './components/Search.jsx';
+import Header from './components/Header.jsx'
 
 class App extends Component {
     constructor(props) {
@@ -91,8 +93,9 @@ class App extends Component {
 
 		return (
 			<div className="main-body">
+                <Header></Header>
                 <Search onSelect={this.searchViaUserInput}/>
-                <h4 className="geo-loc">Your current postion is {this.showGeoLocation(this.state.Lat, this.state.Long)}</h4>
+                {/* <h5 className="geo-loc">Your current postion is {this.showGeoLocation(this.state.Lat, this.state.Long)}</h5> */}
                 <DetailList api_data={this.state.ngo_data}/>
 			</div>
 		);
