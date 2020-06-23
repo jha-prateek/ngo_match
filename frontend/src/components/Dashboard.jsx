@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
-import './App.css';
-import DetailList from './components/DetailList';
-import Search from './components/Search.jsx';
-import Header from './components/Header.jsx'
+import DetailList from './DetailList';
+import Search from './Search.jsx';
 
-class App extends Component {
+class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -85,15 +83,14 @@ class App extends Component {
     componentDidMount() {
         this.getGeoLocation();
         this.setState({
-            'googleApiKeys': require('./config.json').GoogleAPIKey
+            'googleApiKeys': require('../config.json').GoogleAPIKey
         });   
     }
 
     render() {
 
 		return (
-			<div className="main-body">
-                <Header></Header>
+			<div className="dashboard">
                 <Search onSelect={this.searchViaUserInput}/>
                 {/* <h5 className="geo-loc">Your current postion is {this.showGeoLocation(this.state.Lat, this.state.Long)}</h5> */}
                 <DetailList api_data={this.state.ngo_data}/>
@@ -103,4 +100,4 @@ class App extends Component {
 }
 
 
-export default App;
+export default Dashboard;

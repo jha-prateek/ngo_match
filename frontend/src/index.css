@@ -6,9 +6,10 @@
 }
 
 body {
-  padding: 50px;
+  padding: 17%;
+  padding-top: 30px;
   margin: 0;
-  background-color:#f1f1f1;
+  background-color:#8c8c8c;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -16,4 +17,79 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.navbar{
+  justify-content: space-between;
+  color: #f9f9f9;
+}
+
+.links{
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.links a{
+  color: #f9f9f9;
+}
+
+.links a:hover{
+  color: #91c7d3;
+  text-decoration: none;
+}
+
+li{
+  list-style: none ;
+}
+
+/* .dashboard{
+  padding: 5%;
+} */
+
+.main-form{
+  padding: 5%;
+}
+
+.main-input{
+  justify-content: center;
+  display: flex;
+  margin: 0px 32% 0px 32%;
+  position:relative; 
+  overflow:visible;
+}
+
+.main-input input {
+  text-align: left;
+  background: #f9f9f9;
+  background-image: url(https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_search_48px-128.png);
+  background-repeat: no-repeat;
+  background-size: 13px 13px;
+  background-position: 5px 8.5px;
+  color: #000;
+  padding-left: 20px;
+  margin: 20px;
+}
+
+.suggestions-list {
+  top: calc(1.5em + 0.5rem + 22px);;
+  position: absolute;
+  background-color: #f9f9f9;
+  margin-top: 0px;
+  padding-inline-start: 0px;
+  z-index: 1;
+  border-radius: 0 0 5px 5px;
+  width: 100%;
+}
+
+.suggestions-list-item{
+  border-color: #7b7b7b;
+  width: 100%;
+  padding: 5px;
+}
+.suggestions-list-item:hover{
+  cursor: pointer;
+  box-shadow: 0px 2px 2px 0px rgba(35, 35, 35, 0.2);
+  background-color: rgb(194, 194, 194);
+  border-radius: 5px;
 }

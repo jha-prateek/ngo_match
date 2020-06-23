@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-// import Details from './Details.jsx';
 
 export default class DetailList extends Component {
     render() {
         let ngo_details = this.props.api_data;
-        let details;
         let tableDetails;
         if (ngo_details !== undefined && ngo_details.isLoaded) {
             tableDetails = ngo_details.items.map(data => {
@@ -23,7 +21,7 @@ export default class DetailList extends Component {
         return (
             <div className="detail-list-container">
                 <table className="table table-hover">
-                    <thead class="thead-dark">
+                    <thead className="thead-dark">
                         <tr>
                             <th scope="col">Name</th>
                             <th scope="col">Full Address</th>
